@@ -1,0 +1,13 @@
+{
+	"autoload": {
+		"psr-4" : {
+			"Root3287\\" : "inc/"
+		}
+	},
+	"require": {
+		"twbs/bootstrap": "x",
+		"thomaspark/bootswatch": "x",
+		"components/jquery": "x",
+		"heimrichhannot/popper.js": "x"
+	}
+}

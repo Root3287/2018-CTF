@@ -1,0 +1,4 @@
+/vendor
+.DS_STORE
+inc/config.php
+inc/install.php
