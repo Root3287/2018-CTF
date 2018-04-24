@@ -1,6 +1,6 @@
 <?php
-require_once "app/Root3287/classes/Hash.class.php";
-require_once "app/Root3287/classes/DB.class.php";
+require_once "inc/classes/Hash.class.php";
+require_once "inc/classes/DB.class.php";
 use Root3287\classes\DB as DB;
 use Root3287\classes\Hash as Hash;
 $db = DB::getInstance();

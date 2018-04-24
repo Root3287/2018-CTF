@@ -1,6 +1,6 @@
 <?php
 $user = new Root3287\classes\User();
-$navbar = json_decode(Root3287\classes\Setting::get('navbar_top'), true)['links'];
+$navbar = json_decode(Root3287\classes\Setting::get('navbar-top'), true)['links'];
 ?>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
@@ -15,6 +15,7 @@ $navbar = json_decode(Root3287\classes\Setting::get('navbar_top'), true)['links'
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <?php
+      if(count($navbar) > 0){
       foreach ($navbar as $nav => $navItem) {
         if($navItem["type"] == "link"){
           //$navItem["name"];
@@ -80,6 +81,7 @@ $navbar = json_decode(Root3287\classes\Setting::get('navbar_top'), true)['links'
         <?php
         }
       }
+    }
       ?>
     </ul>
 

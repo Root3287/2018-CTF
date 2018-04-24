@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/assets/css/bootstrap 4.0/<?php Root3287\classes\Setting::show('theme');?>.css">
+<link rel="stylesheet" href="/assets/css/bootstrap 4.0/<?php echo Root3287\classes\Setting::get("theme");?>.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="/assets/js/bootstrap 4.0/jquery.min.js"></script>
 <script src="/assets/js/bootstrap 4.0/bootstrap.min.js"></script>
