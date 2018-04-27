@@ -269,7 +269,7 @@ if(isset($GLOBALS['config']['install']) && $GLOBALS['config']['install'] == true
 			<div class="card">
 				<div class="card-body">
 					<h1>Register</h1>
-					<form action="" method="POST">
+					<form action="" method="POST" autocomplete="off">
 						<div class="form-group">
 							<label for="name">Name:</label>
 							<input type="text" class="form-control" name="name" placeholder="Name" id="name" value="<?php echo classes\Input::get('name'); ?>">
@@ -310,7 +310,7 @@ if(isset($GLOBALS['config']['install']) && $GLOBALS['config']['install'] == true
 				fclose($temp);
 			}
 			if(is_writable('inc/install.php'))
-					file_put_contents('inc/install.php', '<?php'.PHP_EOL.'$CONFIG[\'config\'][\'install\'] = true;'.PHP_EOL, FILE_APPEND);
+					file_put_contents('inc/install.php', '<?php'.PHP_EOL.'$GLOBALS[\'config\'][\'install\'] = true;'.PHP_EOL, FILE_APPEND);
 			else
 				die('Config not writable');
 		?>

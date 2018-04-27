@@ -26,15 +26,15 @@ if(Input::exists()){
 		]);
 
 		if($val->passed()){
-			DB::getInstance()->insert('ctf_teams', [
+			if(DB::getInstance()->insert('ctf_teams', [
 				"name" => Output::clean(Input::get('name')),
 				"code" => Hash::unique_length(16),
 				"creator" => $user->data()->id,
 				"date" => date("Y-m-d H:i:s"),
-				"public" => (Input::get('public') !== null)? true: false,
-			]);
-
-			Redirect::to("/t/{$code}/");
+				"public" => (Input::get('public') === null)? 0: 1,
+			])){
+				Redirect::to("/team/join/");
+			}
 		}else{
 			$msg = "";
 			foreach($val->errors() as $e){

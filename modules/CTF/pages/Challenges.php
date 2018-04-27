@@ -33,6 +33,10 @@ if(Input::exists()){
 					"completed" => 1,
 					"date" => date("Y-m-d H:i:s"),
 				]);
+				$cp = DB::getInstance()->get("ctf_teams", ["id", "=", $user->data()->team])->first()->points;
+				DB::getInstance()->update("ctf_teams", $user->data()->team, [
+					"points" => $cp+$flag->points,
+				]);
 				Session::flash("alert-success", "Flag Found! ".$flag->name);
 			}else{
 				Session::flash("alert-danger", "Flag not Found! ".$flag->name);
@@ -95,7 +99,7 @@ if(Input::exists()){
 	        <p id="hint"></p>
 	      </div>
 	      <div class="modal-footer">
-	      	<form action="" method="POST" class="form-inline">
+	      	<form action="" method="POST" class="form-inline" autocomplete="off">
 	      		<div class="form-group mx-1">
 	      			<input type="text" name="flag" class="form-control">
 	      			<input id="challengeID" type="hidden" name="challengeID" value="">

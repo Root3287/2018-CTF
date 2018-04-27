@@ -77,7 +77,7 @@ if(classes\Input::exists()){
 		<div class="card">
 			<div class="card-body">
 				<h1 class="text-center">Register</h1>
-				<form action="" method="POST">
+				<form action="" method="POST" autocomplete="off">
 					<div class="form-group">
 						<label for="username">Username:</label><input name="username" type="text" id="username" class="form-control" value="<?php echo classes\Input::get('username'); ?>">
 					</div>

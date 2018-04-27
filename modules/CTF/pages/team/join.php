@@ -13,6 +13,7 @@ if(!$user->isLoggedIn()){
 	Redirect::to('/');
 }
 $currentTeamCode = "";
+$currentTeamPoints = 0;
 
 $db = DB::getInstance();
 $teams = [];
@@ -33,6 +34,7 @@ if(Input::exists()){
 				DB::getInstance()->update("users", $user->data()->id, ["team" => (int)$q->id]);
 				Session::flash('alert-success', "You have joined team ".$q->name);
 				$currentTeamCode = $q->code;
+				$currentTeamPoints = $q->points;
 			}catch(Exception $e){
 				die($e->getMessage());
 			}
@@ -62,8 +64,10 @@ foreach ($db->get('ctf_teams', ["1","=","1"])->results() as $data) {
 foreach ($db->get('ctf_teams', ["creator","=",$user->data()->id])->results() as $data) {
 		$teams[$data->name] = ["id"=>$data->id, "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
 }
-if($user->data()->team != 0)
+if($user->data()->team != 0){
 	$currentTeamCode = DB::getInstance()->get('ctf_teams', ["id", "=", $user->data()->team])->first()->code;
+	$currentTeamPoints = DB::getInstance()->get('ctf_teams', ["id", "=", $user->data()->team])->first()->points;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,7 +87,7 @@ if($user->data()->team != 0)
 		<div class="card my-2">
 			<div class="card-body">
 				<h1>Current Team</h1>
-				<p class="card-subtitle text-muted mb-2">Code: <?php echo $currentTeamCode; ?></p>
+				<p class="card-subtitle text-muted mb-2">Code: <?php echo $currentTeamCode; ?><br>Points: <?php echo $currentTeamPoints; ?></p>
 				<a href="/team/leave/" class="btn btn-danger">Leave</a>
 			</div>
 		</div>
@@ -91,7 +95,7 @@ if($user->data()->team != 0)
 		<div class="card my-2">
 			<div class="card-body">
 				<h1>Join a Team</h1>
-				<form action="" method="POST">
+				<form action="" method="POST" autocomplete="off">
 					<div class="form-group">
 						<input type="text" class="form-control" name="teamCode">
 					</div>

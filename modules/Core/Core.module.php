@@ -15,6 +15,10 @@ $core->classAutoload(function($class){
 }); 
 
 $core->addPage('/', function(){
+	if(!isset($GLOBALS['config']['install'])){
+		classes\Redirect::to('/install/');
+		return true;
+	}
 	require 'pages/index.php';
 	return true;
 });

@@ -190,7 +190,7 @@ $data["tableCreate"][]= $db->createTable("ctf_attempt", [
 		"AUTO_INCREMENT",
 	],
 	"team" => [
-		"INT" => 11,,
+		"INT" => 11,
 		"NOT NULL",
 	],
 	"challenge" => [
@@ -199,6 +199,9 @@ $data["tableCreate"][]= $db->createTable("ctf_attempt", [
 	],
 	"answer" => [
 		"MEDIUMTEXT",
+	],
+	"answer" => [
+		"DATETIME",
 	],
 	"PRIMARY KEY" => "id",
 ]);
@@ -234,7 +237,7 @@ $data["tableCreate"][]= $db->createTable("ctf_challenge_complete", [
 	"completed" => [
 		"INT" => 11,
 		"NOT NULL",
-		"DEFAULT `1`"
+		"DEFAULT '1'",
 	],
 	"date" => [
 		"DATETIME",
@@ -254,7 +257,7 @@ $data["tableCreate"][]= $db->createTable("ctf_challenges", [
 	"description" => [
 		"MEDIUMTEXT",
 	],
-	"categroy" => [
+	"category" => [
 		"INT" => 11,
 		"NOT NULL",
 	],
@@ -268,7 +271,7 @@ $data["tableCreate"][]= $db->createTable("ctf_challenges", [
 	"points" => [
 		"INT" => 11,
 		"NOT NULL",
-		"DEFAULT `0`",
+		"DEFAULT '0'",
 	],
 	"date" => [
 		"DATETIME",
@@ -288,7 +291,7 @@ $data["tableCreate"][]= $db->createTable("ctf_teams", [
 	"points" => [
 		"int"=>11,
 		"NOT NULL",
-		"DEFAULT `0`",
+		"DEFAULT '0'",
 	],
 	"code" => [
 		"TEXT",
@@ -299,9 +302,9 @@ $data["tableCreate"][]= $db->createTable("ctf_teams", [
 		"NOT NULL",
 	],
 	"public" => [
-		"INT" => 11,
+		"TINYINT" => 1,
 		"NOT NULL",
-		"DEFAULT `1`",
+		"DEFAULT 'true'",
 	],
 	"date" => [
 		"DATETIME",
