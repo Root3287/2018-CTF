@@ -4,7 +4,7 @@ $navbar = json_decode(Root3287\classes\Setting::get('navbar-top'), true)['links'
 ?>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand" href="/">Navbar</a>
+  <a class="navbar-brand" href="/"><?php echo Root3287\classes\Setting::get('title'); ?></a>
 
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">

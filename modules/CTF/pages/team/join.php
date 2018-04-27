@@ -6,13 +6,13 @@ use Root3287\classes\Output as Output;
 use Root3287\classes\Session as Session;
 use Root3287\classes\User as User;
 use Root3287\classes\Token as Token;
-use Root3287\classes\Redirect as Redirect;
 
 $user = new User();
 
 if(!$user->isLoggedIn()){
 	Redirect::to('/');
 }
+$currentTeamCode = "";
 
 $db = DB::getInstance();
 $teams = [];
@@ -32,6 +32,7 @@ if(Input::exists()){
 			try{
 				DB::getInstance()->update("users", $user->data()->id, ["team" => (int)$q->id]);
 				Session::flash('alert-success', "You have joined team ".$q->name);
+				$currentTeamCode = $q->code;
 			}catch(Exception $e){
 				die($e->getMessage());
 			}
@@ -43,7 +44,7 @@ if(Input::exists()){
 			foreach ($q2->results() as $data) {
 				if($data->public == 0){ 
 				}else{
-					$teams[] = [ "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
+					$teams[] = ["id"=>$data->id, "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
 				}
 			}
 		}
@@ -55,10 +56,12 @@ if(Input::exists()){
 foreach ($db->get('ctf_teams', ["1","=","1"])->results() as $data) {
 	if($data->public == 0){ 
 	}else{
-		$teams[] = [ "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
+		$teams[$data->name] = ["id"=>$data->id, "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
 	}
 }
-$currentTeamCode = "";
+foreach ($db->get('ctf_teams', ["creator","=",$user->data()->id])->results() as $data) {
+		$teams[$data->name] = ["id"=>$data->id, "name" => $data->name, "code"=>$data->code, "date"=>$data->date];
+}
 if($user->data()->team != 0)
 	$currentTeamCode = DB::getInstance()->get('ctf_teams', ["id", "=", $user->data()->team])->first()->code;
 ?>
@@ -81,6 +84,7 @@ if($user->data()->team != 0)
 			<div class="card-body">
 				<h1>Current Team</h1>
 				<p class="card-subtitle text-muted mb-2">Code: <?php echo $currentTeamCode; ?></p>
+				<a href="/team/leave/" class="btn btn-danger">Leave</a>
 			</div>
 		</div>
 		<?php endif; ?>
@@ -103,14 +107,17 @@ if($user->data()->team != 0)
 						<tr>
 							<td>Name</td>
 							<td>Date</td>
+							<td>Members</td>
 							<td>Code</td>
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach($teams as $t): ?>
+						<?php foreach($teams as $t): 
+						$members = DB::getInstance()->get('users', ["team", "=", $t["id"]])->count();?>
 						<tr>
 							<td><?php echo $t["name"];?></td>
 							<td><?php echo $t["date"];?></td>
+							<td><?php echo $members; ?></td>
 							<td><?php echo $t["code"];?></td>
 						</tr>
 						<?php endforeach; ?>

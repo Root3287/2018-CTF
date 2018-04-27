@@ -64,6 +64,10 @@ $data["tableCreate"][] = $db->createTable("users", [
 		"INT" => 11,
 		"DEFAULT '1'",
 	],
+	"team" => [
+		"INT" => 11,
+		"DEFAULT '0'",
+	],
 	"PRIMARY KEY" => "id",
 ]);
 $data["tableCreate"][]= $db->createTable("user_session", [
@@ -139,7 +143,7 @@ $data["tableCreate"][]= $db->createTable("logs", [
 
 $data['insert'][] = $db->insert("settings", [
 	"name" => "title",
-	"value" => "Template",
+	"value" => "CTF",
 ]);
 $data['insert'][] = $db->insert("settings", [
 	"name" => "theme",
@@ -156,7 +160,7 @@ $data['insert'][] = $db->insert("settings", [
 
 $data['insert'][] = $db->insert("settings", [
 	"name" => "navbar-top",
-	"value" => "{\"links\":[]}",
+	"value" => '{ "links":[ { "name": "Challenges", "type": "link", "content": "/challenges/", "haveLogIn": true }, { "name": "Team", "type": "multi-link", "haveLogIn": true, "content": [ { "name": "Create Team", "type": "link", "content": "/team/create/" }, { "name": "Join Team", "type": "link", "content": "/team/join/" } ] } ] }',
 ]);
 
 $data['insert'][] = $db->insert("settings", [
@@ -176,6 +180,135 @@ $data['insert'][] = $db->insert("groups", [
 	"group_name"=>"Admin",
 	"permissions"=> "{\"Admin\":1, \"Mod\":1}",
 ]);
+
+
+// CTF
+$data["tableCreate"][]= $db->createTable("ctf_attempt", [
+	"id" => [
+		"INT" => 11,
+		"NOT NULL",
+		"AUTO_INCREMENT",
+	],
+	"team" => [
+		"INT" => 11,,
+		"NOT NULL",
+	],
+	"challenge" => [
+		"INT" => 11,
+		"NOT NULL",
+	],
+	"answer" => [
+		"MEDIUMTEXT",
+	],
+	"PRIMARY KEY" => "id",
+]);
+$data["tableCreate"][]= $db->createTable("ctf_category", [
+	"id" => [
+		"INT" => 11,
+		"NOT NULL",
+		"AUTO_INCREMENT",
+	],
+	"name" => [
+		"TEXT",
+		"NOT NULL",
+	],
+	"description" => [
+		"TEXT",
+	],
+	"PRIMARY KEY" => "id",
+]);
+$data["tableCreate"][]= $db->createTable("ctf_challenge_complete", [
+	"id" => [
+		"INT" => 11,
+		"NOT NULL",
+		"AUTO_INCREMENT",
+	],
+	"team" => [
+		"INT" => 11,
+		"NOT NULL",
+	],
+	"challenge" => [
+		"INT" => 11,
+		"NOT NULL",
+	],
+	"completed" => [
+		"INT" => 11,
+		"NOT NULL",
+		"DEFAULT `1`"
+	],
+	"date" => [
+		"DATETIME",
+	],
+	"PRIMARY KEY" => "id",
+]);
+$data["tableCreate"][]= $db->createTable("ctf_challenges", [
+	"id" => [
+		"INT" => 11,
+		"NOT NULL",
+		"AUTO_INCREMENT",
+	],
+	"name" => [
+		"TEXT",
+		"NOT NULL",
+	],
+	"description" => [
+		"MEDIUMTEXT",
+	],
+	"categroy" => [
+		"INT" => 11,
+		"NOT NULL",
+	],
+	"hint" => [
+		"MEDIUMTEXT",
+	],
+	"flag" => [
+		"MEDIUMTEXT",
+		"NOT NULL",
+	],
+	"points" => [
+		"INT" => 11,
+		"NOT NULL",
+		"DEFAULT `0`",
+	],
+	"date" => [
+		"DATETIME",
+	],
+	"PRIMARY KEY" => "id",
+]);
+$data["tableCreate"][]= $db->createTable("ctf_teams", [
+	"id" => [
+		"INT" => 11,
+		"NOT NULL",
+		"AUTO_INCREMENT",
+	],
+	"name" => [
+		"TEXT",
+		"NOT NULL",
+	],
+	"points" => [
+		"int"=>11,
+		"NOT NULL",
+		"DEFAULT `0`",
+	],
+	"code" => [
+		"TEXT",
+		"NOT NULL",
+	],
+	"creator" => [
+		"INT" => 11,
+		"NOT NULL",
+	],
+	"public" => [
+		"INT" => 11,
+		"NOT NULL",
+		"DEFAULT `1`",
+	],
+	"date" => [
+		"DATETIME",
+	],
+	"PRIMARY KEY" => "id",
+]);
+
 ?>
 <div class="container-fluid">
 	<?php

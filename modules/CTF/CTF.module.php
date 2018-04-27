@@ -2,6 +2,9 @@
 use Root3287\classes\Module as Module;
 use Root3287\classes\DB as DB;
 use Root3287\classes\Output as Output;
+use Root3287\classes\User as User;
+use Root3287\classes\Redirect as Redirect;
+use Root3287\classes\Session as Session;
 
 $ctf = Module::Register("ctf");
 $ctf->description =  "CTF Module";
@@ -15,6 +18,10 @@ $ctf->addPage('/challenges/(.*)', function(){
 });
 
 $ctf->addPage('/team/(.*)/(.*)', function($page){
+	$user = new User();
+	if(!$user->isLoggedin()){
+		Redirect::to('/');
+	}
 	switch($page){
 		case "create":
 			require "pages/team/create.php";
@@ -22,7 +29,15 @@ $ctf->addPage('/team/(.*)/(.*)', function($page){
 		case "join":
 			require "pages/team/join.php";
 			break;
-		case "setting":
+		case "leave":
+			$user->update([
+				"team" => 0,
+			]);
+			Session::flash("alert-warning", "You have left your team!");
+			Redirect::to('/');
+			break;
+		default:
+			return false;
 			break;
 	}
 	return true;
