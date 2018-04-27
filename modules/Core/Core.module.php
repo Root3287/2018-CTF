@@ -50,7 +50,7 @@ $core->addPage('/logout', function(){
 	if(!$user->isLoggedIn()){
 		classes\Redirect::to('/');
 	}
-	$userAdm = new AdminUser();
+	$userAdm = new classes\AdminUser();
 	if($user->hasPermission("Admin") && $userAdm->isLoggedIn()){
 		$userAdm->logout();
 	}
@@ -59,7 +59,7 @@ $core->addPage('/logout', function(){
 	return true;
 });
 $core->addPage('/register', function(){
-	$user= new User();
+	$user= new classes\User();
 	if($user->isLoggedIn()){
 		classes\Session::flash('alert-warning', "You are already logged in!");
 		classes\Redirect::to('/');

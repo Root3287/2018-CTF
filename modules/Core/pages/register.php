@@ -3,7 +3,7 @@ use Root3287\classes;
 $user = new classes\User();
 if(classes\Input::exists()){
 	if(classes\Token::check(classes\Input::get('token'))){
-		$val = new Validation();
+		$val = new classes\Validation();
 		$validate = $val->check($_POST, [
 			"username" => [
 				"required" => true,
@@ -79,13 +79,13 @@ if(classes\Input::exists()){
 				<h1 class="text-center">Register</h1>
 				<form action="" method="POST">
 					<div class="form-group">
-						<label for="username">Username:</label><input name="username" type="text" id="username" class="form-control">
+						<label for="username">Username:</label><input name="username" type="text" id="username" class="form-control" value="<?php echo classes\Input::get('username'); ?>">
 					</div>
 					<div class="form-group">
-						<label for="username">Name:</label><input name="name" type="text" id="name" class="form-control">
+						<label for="name">Name:</label><input name="name" type="text" id="name" class="form-control" value="<?php echo classes\Input::get('name'); ?>">
 					</div>
 					<div class="form-group">
-						<label for="username">Email:</label><input name="email" type="email" id="email" class="form-control">
+						<label for="email">Email:</label><input name="email" type="email" id="email" class="form-control" value="<?php echo classes\Input::get('email'); ?>">
 					</div>
 					<div class="form-row form-group">
 						<div class="col">

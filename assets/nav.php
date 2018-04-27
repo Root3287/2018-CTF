@@ -45,6 +45,9 @@ $navbar = json_decode(Root3287\classes\Setting::get('navbar-top'), true)['links'
         </li>
       <?php
         }else if($navItem["type"] == "multi-link"){
+          if(isset($navItem["haveLogIn"]) && $navItem["haveLogIn"] && !$user->isLoggedIn()){
+            continue;
+          }
       ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
